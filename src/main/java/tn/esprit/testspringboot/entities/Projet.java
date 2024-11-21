@@ -17,7 +17,7 @@ import java.util.Set;
 public class Projet {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//  @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private String id;
 
