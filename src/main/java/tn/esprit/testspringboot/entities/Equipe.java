@@ -24,6 +24,6 @@ public class Equipe {
     private String nom;
     private Domaine domaine;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     Set<Projet> projets;
 }
