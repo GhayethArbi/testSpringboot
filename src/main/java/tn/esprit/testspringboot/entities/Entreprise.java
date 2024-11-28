@@ -7,7 +7,6 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
 
-
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
@@ -15,17 +14,12 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Equipe {
-
+public class Entreprise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    private String nom;
-    private Domaine domaine;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    Set<Projet> projets;
-    @ManyToOne
-    Entreprise entreprise;
+    private Long idEntreprise;
+    private String name;
+    private String adresse;
+    @OneToMany(mappedBy = "entreprise")
+    private Set<Equipe> equipes;
 }
