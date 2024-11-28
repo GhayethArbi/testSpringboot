@@ -24,5 +24,6 @@ public interface EntrepriseRepository extends JpaRepository<Entreprise, Long> {
     @Query(value = "select e from Entreprise e where e.adresse = ?1", nativeQuery = true)
     public List<Entreprise> retrieveEntreprisesByAdresseNative(String adresse);
 
+    
 
 }
