@@ -4,22 +4,28 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.testspringboot.entities.Projet;
+
+import java.util.List;
+
 
 public interface ProjetRepository extends JpaRepository<Projet, Long> {
 
 
-    @Modifying
-    @Query(value = "insert into projet(projet_sujet) values (:projetsujet)", nativeQuery = true)
-    Projet addProjet(@Param("projetsujet") String sujet);
+    //jpql
+    @Query("select p from Projet p where p.id = ?1")
+    List<Projet> retrieveProjetById(String id);
 
+    @Modifying
+    @Query(value = "INSERT INTO projet (sujet, id) VALUES (:sujet, :id)", nativeQuery = true)
+    void addProjet(@Param("sujet") String sujet, @Param("id")String id);
 
     @Modifying
     @Query("UPDATE Projet p SET p.sujet = :projetsujet WHERE p.id = :idProjet")
-    Projet updateProjet(@Param("projetsujet") String sujet, @Param("idProjet") long id);
+    void updateProjet(@Param("projetsujet") String sujet, @Param("idProjet") long id);
 
     @Modifying
-    @Query("delete from Projet p  WHERE p.id = :idProjet")
-    Projet updateProjet( @Param("idProjet") long id);
-
+    @Query("DELETE FROM Projet p WHERE p.id = :idProjet")
+    void deleteProjet(@Param("idProjet") long id);
 }

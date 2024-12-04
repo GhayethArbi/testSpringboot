@@ -13,7 +13,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-
+//@Table(name="projet")
 public class Projet {
 
     @Id

@@ -3,6 +3,7 @@ package tn.esprit.testspringboot.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.testspringboot.entities.Equipe;
 import tn.esprit.testspringboot.entities.Projet;
 import tn.esprit.testspringboot.entities.ProjetDetail;
@@ -18,6 +19,7 @@ public class ProjectServiceImpl implements IProjectService {
     ProjetRepository projetRepository;
     EquipeRepository equipeRepository;
     ProjetDetailRepository projetDetailRepository;
+    //crud methods
     @Override
     public List<Projet> getProjets() {
         return projetRepository.findAll();
@@ -43,6 +45,13 @@ public class ProjectServiceImpl implements IProjectService {
         projetRepository.deleteById(id);
     }
 
+
+
+
+
+
+
+    //affectation methods
     @Override
     public Projet addProjetAndDetailProjetAndAssign(Projet projet) {
         return projetRepository.save(projet);
@@ -62,12 +71,10 @@ public class ProjectServiceImpl implements IProjectService {
         Equipe equipe = equipeRepository.findById(idEquipe).get();
         equipe.getProjets().add(projet);
         equipeRepository.save(equipe);
-
     }
 
     @Override
     public void addProjetAndAssignDetailProjet(Projet projet, long idDetailProjet) {
-
         ProjetDetail projetDetail = projetDetailRepository.findById(idDetailProjet).get();
         projet.setProjetdetail(projetDetail);
         projetRepository.save(projet);
@@ -86,9 +93,39 @@ public class ProjectServiceImpl implements IProjectService {
         Projet projet = projetRepository.findById(idProjet).get();
         equipe.getProjets().remove(projet);
         equipeRepository.save(equipe);
-
-
     }
 
 
+
+
+
+
+
+
+
+
+
+    //query methods
+    @Override
+    @Transactional
+    public void addProjectQuery(String sujet, String id){
+         projetRepository.addProjet(sujet, id);
+    }
+
+    @Override
+    @Transactional
+    public void updateProjet(String sujet, long id){
+         projetRepository.updateProjet(sujet, id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteProjet(long id){
+         projetRepository.deleteProjet(id);
+    }
+
+    @Override
+    public List<Projet> retrieveProjectById(String id){
+        return projetRepository.retrieveProjetById(id);
+    }
 }
